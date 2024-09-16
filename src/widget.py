@@ -9,3 +9,7 @@ def mask_account_card(input_number: str) -> str:
         result = input_number[:-16] + get_mask_card_number(input_number[-16:])
     return result
 
+
+def get_date(input_date: str) -> str:
+    date = input_date[8:10] + "." + input_date[5:7] + "." + input_date[:4]
+    return date
