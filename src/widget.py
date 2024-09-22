@@ -5,11 +5,23 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(input_number: str) -> str:
     """Функция принимает тип и номер карты или счета и возвращает тип карты или счета и замаскированный номер"""
+    input_list = input_number.split(" ")
+
+    if len(input_list) < 2:
+        raise ValueError("Данные введены некорректно")
+
+    type = ""
+    number = ""
+    for item in input_list:
+        if item.isdigit():
+            number += item
+        else:
+            type += item + " "
     result = ""
-    if input_number.startswith("Счет"):
-        result += "Счет " + get_mask_account(input_number)
+    if type.startswith("Счет"):
+        result += type + get_mask_account(number)
     else:
-        result += input_number[:-16] + get_mask_card_number(input_number[-16:])
+        result += type + get_mask_card_number(number)
     return result
 
 
