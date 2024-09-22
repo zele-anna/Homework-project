@@ -27,6 +27,9 @@ def mask_account_card(input_number: str) -> str:
 
 def get_date(user_date: str) -> str:
     """Функция принимает дату в заданном формате и возвращает дату в формате ДД.ММ.ГГГГ."""
+    if user_date == "":
+        raise ValueError("Дата не введена")
+
     date_format = datetime.strptime(user_date, "%Y-%m-%dT%H:%M:%S.%f")
     new_date = date_format.strftime("%d.%m.%Y")
     # new_date = input_date[8:10] + "." + input_date[5:7] + "." + input_date[:4]
