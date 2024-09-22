@@ -19,4 +19,6 @@ def get_mask_account(account_number: str) -> str:
     """Принимает на вход номер счета и возвращает его маску,
     в которой отображаются только последние 4 цифры номера счета"""
 
-    return "**" + str(account_number)[-4:]
+    if type(account_number) == int:
+        account_number = str(account_number)
+    return "**" + account_number[-4:]
