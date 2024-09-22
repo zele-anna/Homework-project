@@ -25,3 +25,11 @@ def test_get_mask_account():
     assert get_mask_account("73654108430135874305") == "**4305"
     assert get_mask_account("12345678") == "**5678"
     assert get_mask_account(12345678) == "**5678"
+
+
+def test_get_mask_account_empty():
+    with pytest.raises(ValueError) as exc_info:
+        get_mask_account("")
+        get_mask_account(0)
+        get_mask_account("123")
+    assert str(exc_info.value) == "Введен некорректный номер счета"

@@ -21,4 +21,7 @@ def get_mask_account(account_number: str) -> str:
 
     if type(account_number) == int:
         account_number = str(account_number)
+
+    if len(account_number) < 4:
+        raise ValueError("Введен некорректный номер счета")
     return "**" + account_number[-4:]
