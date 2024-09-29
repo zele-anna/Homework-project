@@ -1,7 +1,7 @@
-from typing import Generator, List
+from typing import Generator
 
 
-def filter_by_currency(transaction_list: List[dict], currency: str) -> Generator[dict]:
+def filter_by_currency(transaction_list: list, currency: str) -> Generator:
     """Принимает на вход список данных о транзакциях и искомую валюту и возвращает итератор,
     который поочередно выдает транзакции, где валюта операции соответствует заданной."""
     if len(transaction_list) == 0:
@@ -15,7 +15,7 @@ def filter_by_currency(transaction_list: List[dict], currency: str) -> Generator
     return (x for x in transaction_list if x["operationAmount"]["currency"]["name"] == currency)
 
 
-def transaction_descriptions(transaction_list: List[dict]) -> Generator:
+def transaction_descriptions(transaction_list: dict) -> Generator:
     """Принимает на вход список данных о транзакциях и по очереди возвращает описание каждой транзакции."""
     if len(transaction_list) == 0:
         raise ValueError("Список транзакций не задан")
