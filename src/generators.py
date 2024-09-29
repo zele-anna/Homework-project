@@ -1,4 +1,7 @@
-def filter_by_currency(transaction_list, currency):
+from typing import Generator, List
+
+
+def filter_by_currency(transaction_list: List[dict], currency: str) -> Generator[dict]:
     """Принимает на вход список данных о транзакциях и искомую валюту и возвращает итератор,
     который поочередно выдает транзакции, где валюта операции соответствует заданной."""
     if len(transaction_list) == 0:
@@ -12,7 +15,7 @@ def filter_by_currency(transaction_list, currency):
     return (x for x in transaction_list if x["operationAmount"]["currency"]["name"] == currency)
 
 
-def transaction_descriptions(transaction_list):
+def transaction_descriptions(transaction_list: List[dict]) -> Generator:
     """Принимает на вход список данных о транзакциях и по очереди возвращает описание каждой транзакции."""
     if len(transaction_list) == 0:
         raise ValueError("Список транзакций не задан")
@@ -20,7 +23,7 @@ def transaction_descriptions(transaction_list):
         yield trans["description"]
 
 
-def card_number_generator(start_num, stop_num):
+def card_number_generator(start_num: int, stop_num: int) -> Generator:
     """Генерирует номера карт в заданном диапазоне по возрастанию."""
     if start_num < 0 or stop_num > 9999999999999999:
         raise ValueError("Генерация невозможна")

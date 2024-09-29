@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 @pytest.fixture
@@ -56,7 +56,7 @@ def test_filter_by_currency(transactions):
         "description": "Перевод организации",
         "from": "Счет 75106830613657916952",
         "to": "Счет 11776614605963066702",
-        }
+    }
     assert next(a) == {
         "id": 142264268,
         "state": "EXECUTED",
@@ -65,7 +65,7 @@ def test_filter_by_currency(transactions):
         "description": "Перевод со счета на счет",
         "from": "Счет 19708645243227258542",
         "to": "Счет 75651667383060284188",
-        }
+    }
     assert next(b) == {
         "id": 939719572,
         "state": "EXECUTED",
@@ -128,5 +128,3 @@ def test_card_number_generator_out_of_range():
     with pytest.raises(ValueError) as exc_info:
         list(card_number_generator(-1, 1))
     assert str(exc_info.value) == "Генерация невозможна"
-
-
