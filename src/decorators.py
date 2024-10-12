@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Callable, Optional
+from typing import Callable, Optional, Union
 
 
 def log(filename: Optional[str] = "no_file") -> Callable:
@@ -9,7 +9,7 @@ def log(filename: Optional[str] = "no_file") -> Callable:
 
     def decorator(func: Callable) -> Callable:
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Union[str | None], **kwargs: Union[str | None]) -> None:
             try:
                 func(*args, **kwargs)
                 if filename == "no_file":
