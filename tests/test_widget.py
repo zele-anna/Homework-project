@@ -12,11 +12,11 @@ from src.widget import get_date, mask_account_card
         ("Visa Super Gold 7000792289606361", "Visa Super Gold 7000 79** **** 6361"),
     ],
 )
-def test_mask_account_card(input_num, expected):
+def test_mask_account_card(input_num: str, expected: str) -> None:
     assert mask_account_card(input_num) == expected
 
 
-def test_mask_account_card_incorrect_input():
+def test_mask_account_card_incorrect_input() -> None:
     with pytest.raises(ValueError) as exc_info:
         mask_account_card("")
         mask_account_card(0)
@@ -25,11 +25,11 @@ def test_mask_account_card_incorrect_input():
     assert str(exc_info.value) == "Данные введены некорректно"
 
 
-def test_get_date():
+def test_get_date() -> None:
     assert get_date("2024-03-11T02:26:18.671407") == "11.03.2024"
 
 
-def test_get_date_empty():
+def test_get_date_empty() -> None:
     with pytest.raises(ValueError) as exc_info:
         get_date("")
         get_date(0)

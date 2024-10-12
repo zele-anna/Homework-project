@@ -7,7 +7,10 @@ from dotenv import load_dotenv
 
 def get_transaction_amount(transaction: dict) -> Union[float, Any]:
     """Получает данные о транзакции и выводит сумму транзакции в рублях."""
-    amount = transaction["operationAmount"]["amount"]
+    try:
+        amount = transaction["operationAmount"]["amount"]
+    except TypeError:
+        return "Сумма не найдена"
     currency_code = transaction["operationAmount"]["currency"]["code"]
     if currency_code in ["USD", "EUR"]:
         amount = convert_to_rub(currency_code, amount)
@@ -26,3 +29,6 @@ def convert_to_rub(currency_code: str, amount: float) -> Union[float, Any]:
         return rub_amount
     else:
         raise Exception(f"Код ошибки: {response.status_code}")
+
+
+# print(convert_to_rub("USD", 10))

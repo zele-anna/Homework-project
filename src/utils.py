@@ -8,6 +8,8 @@ def get_transactions_data(path: str) -> Any:
         with open(path) as file:
             try:
                 transactions_data = json.load(file)
+                if type(transactions_data) == list:
+                    return []
             except json.JSONDecodeError:
                 return []
     except FileNotFoundError:

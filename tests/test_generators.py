@@ -4,7 +4,7 @@ from src.generators import card_number_generator, filter_by_currency, transactio
 
 
 @pytest.fixture
-def transactions():
+def transactions() -> list:
     return [
         {
             "id": 939719570,
@@ -87,24 +87,24 @@ def transactions():
         ),
     ],
 )
-def test_filter_by_currency(transactions, currency, expected):
+def test_filter_by_currency(transactions: list, currency: str, expected: list) -> None:
     a = filter_by_currency(transactions, currency)
     assert list(a) == expected
 
 
-def test_filter_by_currency_not_found(transactions):
+def test_filter_by_currency_not_found(transactions: list) -> None:
     with pytest.raises(ValueError) as exc_info:
         filter_by_currency(transactions, "XXX")
     assert str(exc_info.value) == "Валюта не найдена"
 
 
-def test_filter_by_currency_empty():
+def test_filter_by_currency_empty() -> None:
     with pytest.raises(ValueError) as exc_info:
         filter_by_currency([], "USD")
     assert str(exc_info.value) == "Список транзакций не задан"
 
 
-def test_transaction_descriptions(transactions):
+def test_transaction_descriptions(transactions: dict) -> None:
     a = transaction_descriptions(transactions)
     assert next(a) == "Перевод организации"
     assert next(a) == "Перевод со счета на счет"
@@ -112,7 +112,7 @@ def test_transaction_descriptions(transactions):
     assert next(a) == "Перевод со счета на счет"
 
 
-def test_transaction_descriptions_empty():
+def test_transaction_descriptions_empty() -> None:
     with pytest.raises(ValueError) as exc_info:
         list(transaction_descriptions([]))
     assert str(exc_info.value) == "Список транзакций не задан"
@@ -127,12 +127,12 @@ def test_transaction_descriptions_empty():
         (9999999999999998, 9999999999999999, ["9999 9999 9999 9998", "9999 9999 9999 9999"]),
     ],
 )
-def test_card_number_generator(start, end, expected):
+def test_card_number_generator(start: int, end: int, expected: list) -> None:
     a = card_number_generator(start, end)
     assert list(a) == expected
 
 
-def test_card_number_generator_out_of_range():
+def test_card_number_generator_out_of_range() -> None:
     with pytest.raises(ValueError) as exc_info:
         list(card_number_generator(9999999999999999, 10000000000000000))
     assert str(exc_info.value) == "Генерация невозможна"
