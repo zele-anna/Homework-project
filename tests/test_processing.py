@@ -4,7 +4,7 @@ from src.processing import filter_by_state, sort_by_date
 
 
 @pytest.fixture
-def id_list():
+def id_list() -> list:
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -32,11 +32,11 @@ def id_list():
         ),
     ],
 )
-def test_filter_by_state(id_list, state, expected):
+def test_filter_by_state(id_list: list, state: str, expected: list) -> None:
     assert filter_by_state(id_list, state) == expected
 
 
-def test_filter_by_state_state_not_found():
+def test_filter_by_state_state_not_found() -> None:
     with pytest.raises(KeyError):
         filter_by_state([{}], "CANCELED")
         filter_by_state([{"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"}], "CANCELED")
@@ -74,11 +74,11 @@ def test_filter_by_state_state_not_found():
         ),
     ],
 )
-def test_sort_by_date(id_list, is_reverse, expected):
+def test_sort_by_date(id_list: list, is_reverse: bool, expected: list) -> None:
     assert sort_by_date(id_list, is_reverse) == expected
 
 
-def test_sort_by_date_equal_dates():
+def test_sort_by_date_equal_dates() -> None:
     assert sort_by_date(
         [
             {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
@@ -95,7 +95,7 @@ def test_sort_by_date_equal_dates():
     ]
 
 
-def test_sort_by_date_date_format():
+def test_sort_by_date_date_format() -> None:
     assert sort_by_date(
         [
             {"id": 41428829, "state": "EXECUTED", "date": "07.03.2019"},
