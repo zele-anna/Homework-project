@@ -13,7 +13,9 @@ masks_logger = logging.getLogger("masks")
 def get_mask_card_number(card_number: str) -> str:
     """Принимает на вход номер карты и возвращает ее маску,
     в которой скрыты символы с 7 по 12"""
+
     masks_logger.info("Маскировка номера карты...")
+
     if isinstance(card_number, int):
         masks_logger.debug("Преобразование числа в строку...")
         card_number = str(card_number)
@@ -34,8 +36,8 @@ def get_mask_card_number(card_number: str) -> str:
 def get_mask_account(account_number: str) -> str:
     """Принимает на вход номер счета и возвращает его маску,
     в которой отображаются только последние 4 цифры номера счета"""
-    masks_logger.info("Маскировка номера счета...")
 
+    masks_logger.info("Маскировка номера счета...")
     if isinstance(account_number, int):
         masks_logger.debug("Преобразование числа в строку...")
         account_number = str(account_number)
