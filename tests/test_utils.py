@@ -17,7 +17,7 @@ def test_empty_file(mock_file: str) -> None:
     assert transactions == []
 
 
-@patch("builtins.open", new_callable=mock_open, read_data="123")
+@patch("builtins.open", new_callable=mock_open, read_data="'123'")
 def test_incorrect_data(mock_file: str) -> None:
     """Тест на некорректные данные в файле."""
     transactions = get_transactions_data("../data/operations.json")
