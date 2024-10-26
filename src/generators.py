@@ -8,11 +8,18 @@ def filter_by_currency(transaction_list: list, currency: str) -> Generator:
         raise ValueError("Список транзакций не задан")
     num_of_trans = 0
     for trans in transaction_list:
-        if currency == trans["operationAmount"]["currency"]["name"]:
-            num_of_trans += 1
+        try:
+            if currency == trans["operationAmount"]["currency"]["code"]:
+                return (x for x in transaction_list if x["operationAmount"]["currency"]["code"] == currency)
+        except KeyError:
+            try:
+                if currency == trans["currency_code"]:
+                    return (x for x in transaction_list if x["currency_code"] == currency)
+            except KeyError:
+                raise KeyError("Ключ не найден")
     if num_of_trans == 0:
         raise ValueError("Валюта не найдена")
-    return (x for x in transaction_list if x["operationAmount"]["currency"]["name"] == currency)
+    # return (x for x in transaction_list if x["operationAmount"]["currency"]["code"] == currency)
 
 
 def transaction_descriptions(transaction_list: dict) -> Generator:
