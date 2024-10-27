@@ -8,11 +8,8 @@ from src.utils import get_transactions_data
 from src.widget import get_date, mask_account_card
 
 
-def main():
-    """Запуск программы"""
-
+def file_type_option():
     data_types = {1: "JSON", 2: "CSV", 3: "XLSX"}
-    status_list = ["EXECUTED", "CANCELED", "PENDING"]
 
     data_type_chosen = int(input(f"""Привет! Добро пожаловать в программу работы с банковскими транзакциями. 
 Выберите необходимый пункт меню:
@@ -33,7 +30,11 @@ def main():
     for transaction in transaction_list_raw:
         if transaction:
             transaction_list.append(transaction)
+    return transaction_list
 
+
+def state_option(transaction_list):
+    status_list = ["EXECUTED", "CANCELED", "PENDING"]
     while True:
         status_to_filter = input(f"""Введите статус, по которому необходимо выполнить фильтрацию.
 Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n""").upper()
@@ -43,7 +44,10 @@ def main():
             break
         else:
             print(f"Статус операции '{status_to_filter}' недоступен.")
+    return transaction_list
 
+
+def sort_by_date_option(transaction_list):
     sort_by_date_chosen = input("Отсортировать операции по дате? Да/Нет\n")
     if sort_by_date_chosen.lower() == "да":
         ascending_chosen = input("Отсортировать по возрастанию или по убыванию?\n")
@@ -52,36 +56,25 @@ def main():
         else:
             is_reverse = True
         transaction_list = sort_by_date(transaction_list, is_reverse)
+    return transaction_list
 
-    # try:
-    #     print([x["currency_code"] for x in transaction_list])
-    # except KeyError:
-    #     print([x["operationAmount"]["currency"]["code"] for x in transaction_list])
 
+def filter_rub_option(transaction_list):
     rub_trans_chosen = input("Выводить только рублевые тразакции? Да/Нет\n")
     if rub_trans_chosen.lower() == "да":
         transaction_list = filter_by_currency(transaction_list, "RUB")
-    # try:
-    #     print([x["currency_code"] for x in transaction_list])
-    # except KeyError:
-    #     print([x["operationAmount"]["currency"]["code"] for x in transaction_list])
+    return list(transaction_list)
 
-    # print([x["description"] for x in transaction_list])
 
+def filter_by_word_option(transaction_list):
     filter_by_word_chosen = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет\n")
     if filter_by_word_chosen.lower() == "да":
         string_to_search = input("По какому слову отфильтровать список?\n")
         transaction_list = search_via_description(transaction_list, string_to_search)
+    return transaction_list
 
-    # print([x["description"] for x in transaction_list])
 
-    # categories_list = []
-    # for trans in transaction_list:
-    #     categories_set = set()
-    #     categories_set.add(trans.get("description"))
-    #     categories_list = list(categories_set)
-    # category_count = category_counter(transaction_list, categories_list)
-
+def printing_results(transaction_list):
     if len(transaction_list) == 0:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     else:
@@ -110,6 +103,48 @@ def main():
             except KeyError:
                 currency = transaction["operationAmount"]["currency"]["name"]
             print(f"{mask_to} Сумма: {amount} {currency}")
+
+
+def main():
+    """Запуск программы"""
+
+# Запрос параметров
+    transaction_list = file_type_option()
+    transaction_list = state_option(transaction_list)
+    transaction_list = sort_by_date_option(transaction_list)
+    transaction_list = filter_rub_option(transaction_list)
+    transaction_list = filter_by_word_option(transaction_list)
+
+# Вывод результата
+    printing_results(transaction_list)
+#     if len(transaction_list) == 0:
+#         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+#     else:
+#         print("Распечатываю итоговый список транзакций...\n")
+#         print(f"Всего банковских операций в выборке: {len(transaction_list)}\n")
+#
+#         for transaction in transaction_list:
+#             date = get_date(transaction.get("date"))
+#             # print(f"", end="")
+#
+#             try:
+#                 mask_from = mask_account_card(transaction["from"])
+#                 print(f"{date} {transaction["description"]} {mask_from} -> ", end="")
+#             except KeyError:
+#                 print(f"{date} {transaction["description"]} ", end="")
+#             except AttributeError:
+#                 print(f"{date} {transaction["description"]} ", end="")
+#
+#             mask_to = mask_account_card(transaction["to"])
+#             try:
+#                 amount = transaction["amount"]
+#             except KeyError:
+#                 amount = transaction["operationAmount"]["amount"]
+#             try:
+#                 currency = transaction["currency_name"]
+#             except KeyError:
+#                 currency = transaction["operationAmount"]["currency"]["name"]
+#             print(f"{mask_to} Сумма: {amount} {currency}")
 
 
 main()

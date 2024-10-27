@@ -37,9 +37,11 @@ def test_filter_by_state(id_list: list, state: str, expected: list) -> None:
 
 
 def test_filter_by_state_state_not_found() -> None:
-    with pytest.raises(KeyError):
-        filter_by_state([{}], "CANCELED")
+    assert filter_by_state([{}], "CANCELED") == []
+    assert (
         filter_by_state([{"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"}], "CANCELED")
+        == []
+    )
 
 
 @pytest.mark.parametrize(

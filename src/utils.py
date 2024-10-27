@@ -1,6 +1,5 @@
 import json
 import logging
-from typing import Any
 
 logging.basicConfig(
     filename="logs/utils.log",

@@ -1,7 +1,7 @@
-from typing import Generator
+from typing import Generator, Union
 
 
-def filter_by_currency(transaction_list: list, currency: str) -> Generator:
+def filter_by_currency(transaction_list: list, currency: str) -> Union[Generator, None, str]:
     """Принимает на вход список данных о транзакциях и искомую валюту и возвращает итератор,
     который поочередно выдает транзакции, где валюта операции соответствует заданной."""
     if len(transaction_list) == 0:
