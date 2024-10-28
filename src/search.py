@@ -13,6 +13,7 @@ def search_via_description(transactions: list, string_to_find: str) -> list:
 
 
 def category_counter(transactions: list, categories: list) -> dict:
+    """Функция подсчитывает количество транзакций из переданного списка по каждой из переданного списка категории."""
     categories_lower = [cat.lower() for cat in categories]
     transactions_to_count = []
     for transaction in transactions:
