@@ -30,7 +30,9 @@ def get_date(user_date: str) -> str:
     if user_date == "":
         raise ValueError("Дата не введена")
 
-    date_format = datetime.strptime(user_date, "%Y-%m-%dT%H:%M:%S.%f")
+    try:
+        date_format = datetime.strptime(user_date, "%Y-%m-%dT%H:%M:%S.%f")
+    except ValueError:
+        date_format = datetime.strptime(user_date, "%Y-%m-%dT%H:%M:%SZ")
     new_date = date_format.strftime("%d.%m.%Y")
-    # new_date = input_date[8:10] + "." + input_date[5:7] + "." + input_date[:4]
     return new_date

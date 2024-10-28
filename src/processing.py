@@ -3,7 +3,7 @@ from typing import List
 
 def filter_by_state(id_info: List[dict], state: str = "EXECUTED") -> List[dict]:
     """Функция фильтрует информацию о id по ключу state (по умолчанию - EXECUTED)."""
-    return [item for item in id_info if item["state"] == state]
+    return [item for item in id_info if item.get("state") == state]
 
 
 def sort_by_date(id_info: List[dict], is_reverse: bool = True) -> List[dict]:

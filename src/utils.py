@@ -1,6 +1,5 @@
 import json
 import logging
-from typing import Any
 
 logging.basicConfig(
     filename="logs/utils.log",
@@ -12,7 +11,7 @@ logging.basicConfig(
 utils_logger = logging.getLogger("utils")
 
 
-def get_transactions_data(path: str) -> Any:
+def get_transactions_data(path: str) -> list:
     """Получает информацию о транзакциях из переданного в качестве переменной файла"""
 
     utils_logger.info("Получение информации о транзакциях...")
@@ -37,4 +36,4 @@ def get_transactions_data(path: str) -> Any:
         return []
 
     utils_logger.info("Данные получены успешно!")
-    return transactions_data
+    return list(transactions_data)
